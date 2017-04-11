@@ -61,7 +61,7 @@ class Peach
 	    }
 	}
 
-	public function charge($token, $amount)
+	public function charge($token, $amount, $reference, $description = null)
 	{
 		try {
 			$response = $this->client->post("https://test.oppwa.com/v1/registrations/{$token}/payments", [
@@ -72,7 +72,9 @@ class Peach
 				'amount' => number_format($amount, 2, '.', ''),
 				'currency' => 'ZAR',
 				'paymentType' => 'DB',
-				'recurringType' => 'REPEATED'
+				'recurringType' => 'REPEATED',
+                'merchantInvoiceId' => str_limit($reference, 255),
+                'descriptor' => $description ?? str_limit($description, 127)
 			]
 		]);
 

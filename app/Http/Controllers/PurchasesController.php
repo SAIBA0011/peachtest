@@ -21,8 +21,12 @@ class PurchasesController extends Controller
 
     	$data = $this->peach->charge(
     		auth()->user()->primaryCard->token, 
-    		$product->price / 100
+    		$product->price / 100,
+            "Product: {$product->id}",
+            "Purchased Product {$product->id}"
 		);
+
+    	dd($data);
 
 		return redirect()->route('account.billing.index');
     }
